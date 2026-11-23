@@ -34,7 +34,9 @@ export async function sendAuthEmail(email: AuthEmail): Promise<void> {
  * `after()` keeps the Vercel invocation alive. Outside a request, delivery is awaited.
  */
 export async function queueAuthEmail(email: AuthEmail): Promise<void> {
-  const task = sendAuthEmail(email).catch(() => undefined)
+  const task = sendAuthEmail(email).catch(function logQueuedEmailError(error) {
+    console.error('[auth email] Queued delivery failed.', error)
+  })
 
   try {
     after(async function sendQueuedAuthEmail() {
@@ -64,8 +66,24 @@ async function sendWithResend(email: AuthEmail): Promise<void> {
   })
 
   if (result.error) {
-    throw new Error('Email delivery failed.')
+    throw new Error(describeResendError(result.error))
   }
+}
+
+interface ResendError {
+  message: string
+  name: string
+  statusCode: number | null
+}
+
+/**
+ * Names Resend's reason for a rejected send, such as an unverified sender
+ * domain or an invalid API key. The message only reaches server logs.
+ */
+export function describeResendError(error: ResendError): string {
+  const status = error.statusCode === null ? '' : ` ${error.statusCode}`
+
+  return `Email delivery failed (Resend ${error.name}${status}): ${error.message}`
 }
 
 /** Sends one authentication email to the local Mailpit SMTP server. */
