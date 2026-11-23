@@ -24,7 +24,6 @@ import { workspacePolicy } from './organization-policy'
 import { resolveAuthBaseURL, resolveAuthTrustedOrigins } from './origins'
 import { verifyStoredPassword } from './password'
 import { isAllowedProfileImage, profileImageToStore } from './profile'
-import { resolveSignUpPolicy } from './sign-up-policy'
 
 /**
  * Builds the Better Auth server.
@@ -32,8 +31,6 @@ import { resolveSignUpPolicy } from './sign-up-policy'
  * New passwords use Better Auth's scrypt hash. Existing bcrypt hashes still verify.
  */
 function createAuth() {
-  const signUpPolicy = resolveSignUpPolicy(process.env)
-
   return betterAuth({
     account: {
       accountLinking: {
@@ -88,13 +85,7 @@ function createAuth() {
       },
       user: {
         create: {
-          before: async function enforceSignUpPolicy(user) {
-            if (signUpPolicy.disableSignUp) {
-              throw new APIError('FORBIDDEN', {
-                message: 'Sign-up is not available.',
-              })
-            }
-
+          before: async function validateSignUpImage(user) {
             const image = profileImageToStore(user.image)
 
             if (image === undefined && user.image) {
@@ -123,7 +114,6 @@ function createAuth() {
     },
     hooks: workspacePolicy,
     emailAndPassword: {
-      disableSignUp: signUpPolicy.disableSignUp,
       enabled: true,
       password: {
         verify: verifyStoredPassword,
@@ -170,7 +160,6 @@ function createAuth() {
       google: {
         clientId: process.env.GOOGLE_CLIENT_ID ?? '',
         clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-        disableSignUp: signUpPolicy.disableSignUp,
       },
     },
     trustedOrigins: resolveAuthTrustedOrigins(process.env),

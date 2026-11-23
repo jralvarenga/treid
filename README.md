@@ -101,7 +101,6 @@ and every listed key can decrypt. To rotate:
 | `CREDENTIALS_ENCRYPTION_KEYS` | Keys that encrypt stored Alpaca credentials                             |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google sign-in                                             |
 | `RESEND_API_KEY`, `EMAIL_FROM` | Verification and reset mail                                            |
-| `AUTH_DISABLE_SIGNUP`         | Optional `true` to close sign-up                                        |
 | `NEXT_PUBLIC_APP_URL`         | Public app origin for metadata, `robots.txt` and the sitemap            |
 | `NEXT_PUBLIC_LANDING_URL`     | Landing origin that serves `/terms` and `/privacy`                      |
 | `ALPACA_CRYPTO_LOCATION`      | Optional Alpaca crypto data location: `us`, `us-1`, `us-2`, `eu-1` or `bs-1` |
@@ -132,8 +131,6 @@ In Google Cloud, create an OAuth client with this authorized redirect URI:
 ```
 
 Sign-up is open in every environment, production included.
-`AUTH_DISABLE_SIGNUP=true` closes it. Google sign-in for an existing or
-migrated user still works when sign-up is closed.
 
 ### 4. Set up the database
 
@@ -222,7 +219,6 @@ GOOGLE_CLIENT_SECRET
 RESEND_API_KEY
 EMAIL_FROM
 CREDENTIALS_ENCRYPTION_KEYS
-AUTH_DISABLE_SIGNUP
 NEXT_PUBLIC_APP_URL # Production only
 NEXT_PUBLIC_LANDING_URL
 ```
@@ -235,7 +231,6 @@ NEXT_PUBLIC_LANDING_URL
 - Google does not accept wildcard redirect URIs. Google sign-in on a preview
   works only after `https://<VERCEL_URL>/api/auth/callback/google` is added;
   use email and password on other previews.
-- Sign-up is open by default. Set `AUTH_DISABLE_SIGNUP=true` to close it.
 
 Vercel deploys before migrations finish, so run them in CI as described in
 [Continuous integration](#continuous-integration) and keep each migration

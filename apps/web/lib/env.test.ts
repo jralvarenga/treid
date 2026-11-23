@@ -57,14 +57,4 @@ describe('parseEnv', () => {
 
     expect(env.RESEND_API_KEY).toBeUndefined()
   })
-
-  test('treats a blank sign-up gate as unset', () => {
-    const env = parseEnv(
-      validEnv({
-        AUTH_DISABLE_SIGNUP: '',
-      })
-    )
-
-    expect(env.AUTH_DISABLE_SIGNUP).toBeUndefined()
-  })
 })

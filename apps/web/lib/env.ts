@@ -35,10 +35,6 @@ function createEnvSchema(nodeEnv: string | undefined) {
           }, 'ALPACA_DATA_BASE_URL must be https://data.alpaca.markets.')
           .optional()
       ),
-      AUTH_DISABLE_SIGNUP: z.preprocess(
-        emptyToUndefined,
-        z.string().optional()
-      ),
       BETTER_AUTH_SECRET: z.string().min(32),
       BETTER_AUTH_TRUSTED_ORIGINS: z.preprocess(
         emptyToUndefined,
