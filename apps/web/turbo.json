@@ -15,7 +15,8 @@
         "EMAIL_FROM",
         "GOOGLE_CLIENT_ID",
         "GOOGLE_CLIENT_SECRET",
-        "RESEND_API_KEY"
+        "RESEND_API_KEY",
+        "VERCEL_PROJECT_PRODUCTION_URL"
       ]
     },
     "dev": {
@@ -33,6 +34,7 @@
         "GOOGLE_CLIENT_SECRET",
         "PORT",
         "RESEND_API_KEY",
+        "VERCEL_PROJECT_PRODUCTION_URL",
         "VERCEL_URL"
       ]
     }
