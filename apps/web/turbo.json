@@ -7,8 +7,6 @@
       "passThroughEnv": [
         "ALPACA_CRYPTO_LOCATION",
         "ALPACA_DATA_BASE_URL",
-        "AUTH_ALLOWED_EMAILS",
-        "AUTH_DISABLE_SIGNUP",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_TRUSTED_ORIGINS",
         "BETTER_AUTH_URL",
@@ -17,7 +15,8 @@
         "EMAIL_FROM",
         "GOOGLE_CLIENT_ID",
         "GOOGLE_CLIENT_SECRET",
-        "RESEND_API_KEY"
+        "RESEND_API_KEY",
+        "VERCEL_PROJECT_PRODUCTION_URL"
       ]
     },
     "dev": {
@@ -25,8 +24,6 @@
       "passThroughEnv": [
         "ALPACA_CRYPTO_LOCATION",
         "ALPACA_DATA_BASE_URL",
-        "AUTH_ALLOWED_EMAILS",
-        "AUTH_DISABLE_SIGNUP",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_TRUSTED_ORIGINS",
         "BETTER_AUTH_URL",
@@ -37,6 +34,7 @@
         "GOOGLE_CLIENT_SECRET",
         "PORT",
         "RESEND_API_KEY",
+        "VERCEL_PROJECT_PRODUCTION_URL",
         "VERCEL_URL"
       ]
     }

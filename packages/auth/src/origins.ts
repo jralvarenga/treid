@@ -14,8 +14,10 @@ export function resolveAuthBaseURL(
 
 /**
  * Origins allowed for CSRF checks and OAuth callbacks.
- * Includes the active base URL, the configured production origin, preview
- * hosts, and any extra comma-separated BETTER_AUTH_TRUSTED_ORIGINS values.
+ * Includes the active base URL, the configured production origin, the
+ * deployment host, Vercel's production domain, and any extra comma-separated
+ * BETTER_AUTH_TRUSTED_ORIGINS values. Trusting the production domain keeps
+ * sign-in and sign-out working there when BETTER_AUTH_URL names an old host.
  */
 export function resolveAuthTrustedOrigins(
   source: Record<string, string | undefined>
@@ -33,6 +35,10 @@ export function resolveAuthTrustedOrigins(
 
   if (source.VERCEL_URL) {
     origins.add(`https://${source.VERCEL_URL}`)
+  }
+
+  if (source.VERCEL_PROJECT_PRODUCTION_URL) {
+    origins.add(`https://${source.VERCEL_PROJECT_PRODUCTION_URL}`)
   }
 
   const extra = source.BETTER_AUTH_TRUSTED_ORIGINS

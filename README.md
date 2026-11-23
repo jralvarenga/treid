@@ -101,8 +101,6 @@ and every listed key can decrypt. To rotate:
 | `CREDENTIALS_ENCRYPTION_KEYS` | Keys that encrypt stored Alpaca credentials                             |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google sign-in                                             |
 | `RESEND_API_KEY`, `EMAIL_FROM` | Verification and reset mail                                            |
-| `AUTH_ALLOWED_EMAILS`         | Optional comma-separated sign-up allowlist                              |
-| `AUTH_DISABLE_SIGNUP`         | Optional `true` or `false` to close or open sign-up                     |
 | `NEXT_PUBLIC_APP_URL`         | Public app origin for metadata, `robots.txt` and the sitemap            |
 | `NEXT_PUBLIC_LANDING_URL`     | Landing origin that serves `/terms` and `/privacy`                      |
 | `ALPACA_CRYPTO_LOCATION`      | Optional Alpaca crypto data location: `us`, `us-1`, `us-2`, `eu-1` or `bs-1` |
@@ -132,20 +130,7 @@ In Google Cloud, create an OAuth client with this authorized redirect URI:
 {BETTER_AUTH_URL}/api/auth/callback/google
 ```
 
-Sign-up policy, in order:
-
-- A non-empty `AUTH_ALLOWED_EMAILS` (case-insensitive) restricts new accounts
-  to those addresses in every environment, local development included.
-  `AUTH_DISABLE_SIGNUP` does not override it.
-- With no allowlist, `AUTH_DISABLE_SIGNUP=true` closes sign-up and
-  `AUTH_DISABLE_SIGNUP=false` opens it.
-- With neither set, Vercel production (`VERCEL_ENV=production`) stays closed
-  and Vercel previews (`VERCEL_ENV=preview`) stay open, even though Next.js
-  sets `NODE_ENV=production` there. Without `VERCEL_ENV`,
-  `NODE_ENV=production` stays closed and other environments stay open.
-
-Google sign-in for an existing or migrated user still works when sign-up is
-closed; a new Google user must be on the allowlist when one is set.
+Sign-up is open in every environment, production included.
 
 ### 4. Set up the database
 
@@ -234,8 +219,6 @@ GOOGLE_CLIENT_SECRET
 RESEND_API_KEY
 EMAIL_FROM
 CREDENTIALS_ENCRYPTION_KEYS
-AUTH_ALLOWED_EMAILS
-AUTH_DISABLE_SIGNUP
 NEXT_PUBLIC_APP_URL # Production only
 NEXT_PUBLIC_LANDING_URL
 ```
@@ -248,8 +231,6 @@ NEXT_PUBLIC_LANDING_URL
 - Google does not accept wildcard redirect URIs. Google sign-in on a preview
   works only after `https://<VERCEL_URL>/api/auth/callback/google` is added;
   use email and password on other previews.
-- Production sign-up defaults to closed. Previews stay open unless
-  `AUTH_DISABLE_SIGNUP` or `AUTH_ALLOWED_EMAILS` is set.
 
 Vercel deploys before migrations finish, so run them in CI as described in
 [Continuous integration](#continuous-integration) and keep each migration
