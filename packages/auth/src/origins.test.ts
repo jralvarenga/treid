@@ -39,4 +39,15 @@ describe('resolveAuthTrustedOrigins', () => {
       'https://extra.example.com',
     ])
   })
+
+  test('trusts the Vercel production domain when BETTER_AUTH_URL is stale', () => {
+    expect(
+      resolveAuthTrustedOrigins({
+        BETTER_AUTH_URL: 'https://old-project.vercel.app',
+        VERCEL_ENV: 'production',
+        VERCEL_PROJECT_PRODUCTION_URL: 'app.example.com',
+        VERCEL_URL: 'old-project-abc123.vercel.app',
+      })
+    ).toContain('https://app.example.com')
+  })
 })
