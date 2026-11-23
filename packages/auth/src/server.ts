@@ -24,7 +24,7 @@ import { workspacePolicy } from './organization-policy'
 import { resolveAuthBaseURL, resolveAuthTrustedOrigins } from './origins'
 import { verifyStoredPassword } from './password'
 import { isAllowedProfileImage, profileImageToStore } from './profile'
-import { isSignUpEmailAllowed, resolveSignUpPolicy } from './sign-up-policy'
+import { resolveSignUpPolicy } from './sign-up-policy'
 
 /**
  * Builds the Better Auth server.
@@ -89,9 +89,9 @@ function createAuth() {
       user: {
         create: {
           before: async function enforceSignUpPolicy(user) {
-            if (!isSignUpEmailAllowed(user.email, process.env)) {
+            if (signUpPolicy.disableSignUp) {
               throw new APIError('FORBIDDEN', {
-                message: 'Sign-up is not available for this email.',
+                message: 'Sign-up is not available.',
               })
             }
 

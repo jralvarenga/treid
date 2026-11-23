@@ -7,7 +7,6 @@
       "passThroughEnv": [
         "ALPACA_CRYPTO_LOCATION",
         "ALPACA_DATA_BASE_URL",
-        "AUTH_ALLOWED_EMAILS",
         "AUTH_DISABLE_SIGNUP",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_TRUSTED_ORIGINS",
@@ -25,7 +24,6 @@
       "passThroughEnv": [
         "ALPACA_CRYPTO_LOCATION",
         "ALPACA_DATA_BASE_URL",
-        "AUTH_ALLOWED_EMAILS",
         "AUTH_DISABLE_SIGNUP",
         "BETTER_AUTH_SECRET",
         "BETTER_AUTH_TRUSTED_ORIGINS",
